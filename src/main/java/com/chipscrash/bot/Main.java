@@ -1,7 +1,7 @@
 package com.chipscrash.bot;
 
-import com.chipscrash.bot.Events.ClearCommand;
-import com.chipscrash.bot.Events.InfoCommand;
+import com.chipscrash.bot.Commands.ClearCommand;
+import com.chipscrash.bot.Commands.InfoCommand;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
