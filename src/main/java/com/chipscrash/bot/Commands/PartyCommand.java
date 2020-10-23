@@ -2,15 +2,22 @@ package com.chipscrash.bot.Commands;
 
 import com.chipscrash.bot.Main;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Emote;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.guild.react.GenericGuildMessageReactionEvent;
+import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionAddEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.requests.restaction.MessageAction;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import static com.chipscrash.bot.Main.jda;
 import static com.chipscrash.bot.Main.partyRole;
 
 public class PartyCommand extends ListenerAdapter {
@@ -36,23 +43,30 @@ public class PartyCommand extends ListenerAdapter {
                 switch(args[1]){
                     case "au":
                         neededPlayers = 6;
-                        createPartyEmbed("\uD83D\uDD2A - Among Us!",channel, neededPlayers, memberFullName);
+                        List<Emote> emoteList = jda.getEmotes();
+                        emoteList.forEach(e -> System.out.println(String.format("Name: %s | ID: %s", e.getName(), e.getId())));
+                        Emote auEmote = jda.getEmoteById("755836877067649225");
+                        createPartyEmbed("\uD83D\uDD2A - Among Us!",channel, neededPlayers, memberFullName,auEmote);
                         break;
                     case "pp":
                         neededPlayers = 4;
-                        createPartyEmbed("\uD83C\uDFB2 - Pummelparty!", channel, neededPlayers, memberFullName);
+                        Emote ppEmote = jda.getEmoteById(":heart:");
+                        createPartyEmbed("\uD83C\uDFB2 - Pummelparty!", channel, neededPlayers, memberFullName, ppEmote);
                         break;
                     case "dr":
                         neededPlayers = 5;
-                        createPartyEmbed("\uD83D\uDC7B - Dead Realm!", channel, neededPlayers, memberFullName);
+                        Emote drEmote = jda.getEmoteById(":heart:");
+                        createPartyEmbed("\uD83D\uDC7B - Dead Realm!", channel, neededPlayers, memberFullName, drEmote);
                         break;
                     case "fg":
                         neededPlayers = 3;
-                        createPartyEmbed("\uD83D\uDC51 - Fall Guys", channel, neededPlayers, memberFullName);
+                        Emote fgEmote = jda.getEmoteById(":heart:");
+                        createPartyEmbed("\uD83D\uDC51 - Fall Guys", channel, neededPlayers, memberFullName, fgEmote);
                         break;
                     case "ttt":
                         neededPlayers = 6;
-                        createPartyEmbed("\uD83D\uDD2B - Trouble in Terrorist Town", channel, neededPlayers, memberFullName);
+                        Emote tttEmote = jda.getEmoteById(":heart:");
+                        createPartyEmbed("\uD83D\uDD2B - Trouble in Terrorist Town", channel, neededPlayers, memberFullName, tttEmote);
                         break;
                     default:
                         partyHelpEmbed(channel, showGames);
@@ -66,14 +80,15 @@ public class PartyCommand extends ListenerAdapter {
         }
     }
 
-    public void createPartyEmbed(String title, MessageChannel channel, int neededPlayers, String memberFullName){
+    public void createPartyEmbed(String title, MessageChannel channel, int neededPlayers, String memberFullName, Emote emote){
         partyEmbed.setTitle(title);
         partyEmbed.setDescription(String.format("need at least %s players", neededPlayers));
         partyEmbed.setColor(0xfc6868);
         partyEmbed.addField("Status:", "add your reaction", false);
         partyEmbed.setFooter(String.format("Requested from %s", memberFullName));
-        channel.sendMessage(partyRole.getAsMention()).queue();
-        channel.sendMessage(partyEmbed.build()).queue();
+        channel.sendMessage(partyEmbed.build()).append(partyRole.getAsMention()).queue((message -> {
+            channel.addReactionById(message.getId(),emote).queue();
+        }));
         partyEmbed.clear();
     }
 
@@ -89,5 +104,10 @@ public class PartyCommand extends ListenerAdapter {
         partyEmbed.addField("dr", "Dead Realm", false);
         partyEmbed.setFooter("Duration to find enough players: 2h");
         channel.sendMessage(partyEmbed.build()).queue();
+    }
+
+    @Override
+    public void onGenericGuildMessageReaction(@NotNull GenericGuildMessageReactionEvent event) {
+        //if(event.getMessageId())
     }
 }
