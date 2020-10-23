@@ -1,4 +1,4 @@
-FROM gradle:4 AS GRADLE_BUILD
+FROM gradle:6.7.8-jdk11-openj9 AS GRADLE_BUILD
 COPY ./ ./
 RUN gradle shadowJar
 
