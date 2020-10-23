@@ -19,7 +19,7 @@ public class Main {
         jda = JDABuilder.createDefault(System.getenv("DiscordBot")).build();
         jda.getPresence().setStatus(OnlineStatus.IDLE);
         jda.getPresence().setActivity(Activity.listening("Juice Wrld"));
-        partyRole = jda.getRoleById("746007290124959775");
+        partyRole = jda.getRolesByName("party", true).get(0);
         jda.addEventListener(new InfoCommand());
         jda.addEventListener(new ClearCommand());
         jda.addEventListener(new PartyCommand());
