@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id'application'
     id'com.github.johnrengelman.shadow' version '5.2.0'
+    id "com.palantir.docker" version "0.22.1"
 }
 
 mainClassName='com.chipscrash.bot.Main'
@@ -19,6 +20,11 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     compile "net.dv8tion:JDA:$jdaVersion"
     compile("ch.qos.logback:logback-classic:1.2.3")
+}
+
+docker {
+    name "${project.name}:${project.version}"
+    files 'discordbot.jar'
 }
 
 compileJava.options.encoding = 'UTF-8'
