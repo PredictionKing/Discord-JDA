@@ -121,6 +121,7 @@ public class PartyCommand extends ListenerAdapter {
         partyEmbed.addField("au", "Among Us", false);
         partyEmbed.addField("dr", "Dead Realm", false);
         channel.sendMessage(partyEmbed.build()).queue();
+        partyEmbed.clear();
     }
 
     @Override
