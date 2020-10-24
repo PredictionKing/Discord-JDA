@@ -135,7 +135,6 @@ public class PartyCommand extends ListenerAdapter {
                 partyEmbed.addField(event.getUser().getName()+"#"+event.getUser().getDiscriminator(),formatter.format(date),false);
                 event.getChannel().retrieveMessageById(event.getMessageId()).queue(message -> {
                     if(message.getReactions().stream().count()>0) {
-                        System.out.println(message.getReactions().stream().count());
                         if(message.getReactions().stream().count()==neededPlayers){
                             event.getChannel().sendMessage(String.format("%s enough Players have reacted! Join the Party Voice Channel!", partyRole.getAsMention())).queue();
                         }
@@ -164,11 +163,9 @@ public class PartyCommand extends ListenerAdapter {
                 User user = jda.retrieveUserById(event.getUserId()).complete();
                 event.getChannel().retrieveMessageById(event.getMessageId()).queue(message -> {
                     if(message.getReactions().stream().count()==0){
-                        System.out.println(message.getReactions().stream().count());
                         message.addReaction(emote).queue();
                     }
                     partyEmbed.getFields().removeIf(field -> field.getName().contains(user.getName()));
-                    message.getReactions().forEach(r -> System.out.println(r.getReactionEmote().getName()));
                     message.editMessage(partyEmbed.build()).queue();
                 });
             }
