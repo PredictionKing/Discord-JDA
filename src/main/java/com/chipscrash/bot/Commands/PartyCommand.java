@@ -26,6 +26,11 @@ public class PartyCommand extends ListenerAdapter {
     Emote ppEmote ;
     Emote tttEmote;
     Emote fgEmote ;
+    String ppPicture = "https://imgur.com/a/QVGvTUc";
+    String auPicture = "https://imgur.com/a/JHcnWhN";
+    String tttPicture = "https://imgur.com/a/8yzMHLo";
+    String fgPicture = "https://imgur.com/a/JOWjmAK";
+    String drPicture = "https://imgur.com/a/9drDSo9";
 
 
     @Override
@@ -48,37 +53,34 @@ public class PartyCommand extends ListenerAdapter {
                 ppEmote = jda.getEmoteById("750445382860931154");
                 tttEmote = jda.getEmoteById("756882270282842143");
                 fgEmote = jda.getEmoteById("756878627785801848");
-                File auPic = new File("src/main/java/com/chipscrash/bot/Images/Among_Us_Logo.png");
-                File ppPic = new File("src/main/resources/PummelLogo.png");
-                File tttPic = new File("src/main/resources/ttt_logo.png");
-                File fgPic = new File("src/main/resources/fall_guys_logo.png");
+
                 switch(args[1]){
                     case "au":
                         neededPlayers = 6;
                         List<Emote> emoteList = jda.getEmotes();
                         emoteList.forEach(e -> System.out.println(String.format("Name: %s | ID: %s", e.getName(), e.getId())));
                         partyEmotes.put(auEmote, neededPlayers);
-                        createPartyEmbed(auPic,"\uD83D\uDD2A - Among Us!",channel, neededPlayers, memberFullName,auEmote);
+                        createPartyEmbed(auPicture,"\uD83D\uDD2A - Among Us!",channel, neededPlayers, memberFullName,auEmote);
                         break;
                     case "pp":
                         neededPlayers = 4;
                         partyEmotes.put(ppEmote, neededPlayers);
-                        createPartyEmbed(ppPic,"\uD83C\uDFB2 - Pummelparty!", channel, neededPlayers, memberFullName, ppEmote);
+                        createPartyEmbed(ppPicture,"\uD83C\uDFB2 - Pummelparty!", channel, neededPlayers, memberFullName, ppEmote);
                         break;
                     case "dr":
                         neededPlayers = 5;
                         Emote drEmote = jda.getEmoteById(":heart:");
-                        createPartyEmbed(auPic,"\uD83D\uDC7B - Dead Realm!", channel, neededPlayers, memberFullName, drEmote);
+                        createPartyEmbed(drPicture,"\uD83D\uDC7B - Dead Realm!", channel, neededPlayers, memberFullName, drEmote);
                         break;
                     case "fg":
                         neededPlayers = 3;
                         partyEmotes.put(fgEmote, neededPlayers);
-                        createPartyEmbed(fgPic,"\uD83D\uDC51 - Fall Guys", channel, neededPlayers, memberFullName, fgEmote);
+                        createPartyEmbed(fgPicture,"\uD83D\uDC51 - Fall Guys", channel, neededPlayers, memberFullName, fgEmote);
                         break;
                     case "ttt":
                         neededPlayers = 6;
                         partyEmotes.put(tttEmote, neededPlayers);
-                        createPartyEmbed(tttPic,"\uD83D\uDD2B - Trouble in Terrorist Town", channel, neededPlayers, memberFullName, tttEmote);
+                        createPartyEmbed(tttPicture,"\uD83D\uDD2B - Trouble in Terrorist Town", channel, neededPlayers, memberFullName, tttEmote);
                         break;
                     default:
                         partyHelpEmbed(channel, showGames);
@@ -92,15 +94,15 @@ public class PartyCommand extends ListenerAdapter {
         }
     }
 
-    public void createPartyEmbed(File pic,String title, MessageChannel channel, int neededPlayers, String memberFullName, Emote emote){
+    public void createPartyEmbed(String pic,String title, MessageChannel channel, int neededPlayers, String memberFullName, Emote emote){
         partyEmbed.clear();
         partyEmbed.setTitle(title);
         partyEmbed.setDescription(String.format("need at least %s players", neededPlayers));
         partyEmbed.setColor(0xfc6868);
-        partyEmbed.setThumbnail("attachment://pic.jpg");
+        partyEmbed.setThumbnail(pic);
         partyEmbed.addField("Status:", "add your reaction", false);
         partyEmbed.setFooter(String.format("Requested from %s", memberFullName));
-        channel.sendMessage(partyEmbed.build()).append(partyRole.getAsMention()).addFile(pic,"pic.jpg").queue((message -> {
+        channel.sendMessage(partyEmbed.build()).append(partyRole.getAsMention()).queue((message -> {
             channel.addReactionById(message.getId(),emote).queue();
             partyEmbedIds.add(message.getId());
         }));
