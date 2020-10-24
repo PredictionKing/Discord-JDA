@@ -138,10 +138,12 @@ public class PartyCommand extends ListenerAdapter {
             if(partyEmbedIds.contains(event.getMessageId())){
                 SimpleDateFormat formatter= new SimpleDateFormat("HH:mm");
                 Date date = new Date(System.currentTimeMillis());
+                long count = event.getReaction().retrieveUsers().complete().stream().count();
                 partyEmbed.addField(event.getUser().getName()+"#"+event.getUser().getDiscriminator(),formatter.format(date),false);
                 event.getChannel().retrieveMessageById(event.getMessageId()).queue(message -> {
                     if(message.getReactions().stream().count()>0) {
-                        if(message.getReactions().stream().count()==neededPlayers){
+                        System.out.println(String.format("Count: %s | Needed: %s", event.getReaction().retrieveUsers().complete().stream().count(), neededPlayers));
+                        if(count==neededPlayers){
                             event.getChannel().sendMessage(String.format("%s enough Players have reacted! Join the Party Voice Channel!", partyRole.getAsMention())).queue();
                         }
                         message.removeReaction(emote, message.getAuthor()).queue();
