@@ -26,11 +26,11 @@ public class PartyCommand extends ListenerAdapter {
     Emote ppEmote ;
     Emote tttEmote;
     Emote fgEmote ;
-    String ppPicture = "https://imgur.com/a/QVGvTUc";
-    String auPicture = "https://imgur.com/a/JHcnWhN";
-    String tttPicture = "https://imgur.com/a/8yzMHLo";
-    String fgPicture = "https://imgur.com/a/JOWjmAK";
-    String drPicture = "https://imgur.com/a/9drDSo9";
+    String ppPicture = "https://i.imgur.com/90DHVeH.png";
+    String auPicture = "https://i.imgur.com/Ekzt8Ir.png";
+    String tttPicture = "https://i.imgur.com/EFKftWm.png";
+    String fgPicture = "https://i.imgur.com/yDnuAWs.png";
+    String drPicture = "https://i.imgur.com/1mWAGHN.png";
 
 
     @Override
