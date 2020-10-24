@@ -14,7 +14,7 @@ public class ReadyEvent implements EventListener {
     public void onEvent(@NotNull GenericEvent event) {
         if(event instanceof net.dv8tion.jda.api.events.ReadyEvent) {
             partyRole = jda.getRolesByName("party", true).get(0);
-            adminRole = jda.getRolesByName("bot", false).get(0);
+            adminRole = jda.getRolesByName("!", false).get(0);
             /*
             Use 'getRoleById("751142495395643552")' if you want to change the name of party
             */
