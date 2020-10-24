@@ -13,10 +13,7 @@ import org.gradle.internal.time.Time;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
@@ -27,6 +24,7 @@ public class PartyCommand extends ListenerAdapter {
 
     EmbedBuilder partyEmbed = new EmbedBuilder();
     List<String> partyEmbedIds = new ArrayList<>();
+    HashMap<Emote,Integer> partyEmotes = new HashMap<>();
     Emote auEmote ;
     Emote ppEmote ;
     Emote tttEmote;
@@ -58,12 +56,12 @@ public class PartyCommand extends ListenerAdapter {
                         neededPlayers = 6;
                         List<Emote> emoteList = jda.getEmotes();
                         emoteList.forEach(e -> System.out.println(String.format("Name: %s | ID: %s", e.getName(), e.getId())));
-                        Emote auEmote = jda.getEmoteById("755836877067649225");
+                        partyEmotes.put(auEmote, neededPlayers);
                         createPartyEmbed("\uD83D\uDD2A - Among Us!",channel, neededPlayers, memberFullName,auEmote);
                         break;
                     case "pp":
                         neededPlayers = 4;
-                        Emote ppEmote = jda.getEmoteById("750445382860931154");
+                        partyEmotes.put(ppEmote, neededPlayers);
                         createPartyEmbed("\uD83C\uDFB2 - Pummelparty!", channel, neededPlayers, memberFullName, ppEmote);
                         break;
                     case "dr":
@@ -73,12 +71,12 @@ public class PartyCommand extends ListenerAdapter {
                         break;
                     case "fg":
                         neededPlayers = 3;
-                        Emote fgEmote = jda.getEmoteById(":heart:");
+                        partyEmotes.put(fgEmote, neededPlayers);
                         createPartyEmbed("\uD83D\uDC51 - Fall Guys", channel, neededPlayers, memberFullName, fgEmote);
                         break;
                     case "ttt":
                         neededPlayers = 6;
-                        Emote tttEmote = jda.getEmoteById(":heart:");
+                        partyEmotes.put(tttEmote, neededPlayers);
                         createPartyEmbed("\uD83D\uDD2B - Trouble in Terrorist Town", channel, neededPlayers, memberFullName, tttEmote);
                         break;
                     default:
@@ -122,15 +120,14 @@ public class PartyCommand extends ListenerAdapter {
 
     @Override
     public void onGuildMessageReactionAdd(@NotNull GuildMessageReactionAddEvent event) {
-        List<Emote> partyEmotes = List.of(auEmote,ppEmote,tttEmote,fgEmote);
         if(!event.getUser().isBot()){
-            partyEmotes.forEach(emote -> {
-                addPartyField(emote,event);
+            partyEmotes.forEach((k,v) ->{
+                addPartyField(k,event,v);
             });
         }
     }
 
-    public void addPartyField(Emote emote, GuildMessageReactionAddEvent event){
+    public void addPartyField(Emote emote, GuildMessageReactionAddEvent event, Integer neededPlayers){
         if(event.getReactionEmote().getEmote().equals(emote)){
             if(partyEmbedIds.contains(event.getMessageId())){
                 SimpleDateFormat formatter= new SimpleDateFormat("HH:mm");
@@ -139,24 +136,24 @@ public class PartyCommand extends ListenerAdapter {
                 event.getChannel().retrieveMessageById(event.getMessageId()).queue(message -> {
                     if(message.getReactions().stream().count()>0) {
                         System.out.println(message.getReactions().stream().count());
+                        if(message.getReactions().stream().count()==neededPlayers){
+                            event.getChannel().sendMessage(String.format("%s enough Players have reacted! Join the Party Voice Channel!", partyRole.getAsMention())).queue();
+                        }
                         message.removeReaction(emote, message.getAuthor()).queue();
                     }
                     message.editMessage(partyEmbed.build()).queue();
                 });
             }
         }
+
     }
 
     @Override
     public void onGuildMessageReactionRemove(@NotNull GuildMessageReactionRemoveEvent event) {
 
-        List<Emote> partyEmotes = List.of(auEmote,ppEmote,tttEmote,fgEmote);
-
-            partyEmotes.forEach(emote -> {
-                removePartyField(emote,event);
-            });
-
-
+           partyEmotes.forEach((k,v) ->{
+               removePartyField(k,event);
+           });
 
 
     }
