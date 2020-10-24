@@ -4,18 +4,14 @@ import com.chipscrash.bot.Main;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-import net.dv8tion.jda.api.events.message.guild.react.GenericGuildMessageReactionEvent;
 import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionAddEvent;
 import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionRemoveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.dv8tion.jda.api.requests.restaction.MessageAction;
-import org.gradle.internal.time.Time;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import static com.chipscrash.bot.Main.jda;
@@ -52,7 +48,7 @@ public class PartyCommand extends ListenerAdapter {
                 ppEmote = jda.getEmoteById("750445382860931154");
                 tttEmote = jda.getEmoteById("756882270282842143");
                 fgEmote = jda.getEmoteById("756878627785801848");
-                File auPic = new File("src/main/resources/Among_Us_Logo.png");
+                File auPic = new File("src/main/java/com/chipscrash/bot/Images/Among_Us_Logo.png");
                 File ppPic = new File("src/main/resources/PummelLogo.png");
                 File tttPic = new File("src/main/resources/ttt_logo.png");
                 File fgPic = new File("src/main/resources/fall_guys_logo.png");
