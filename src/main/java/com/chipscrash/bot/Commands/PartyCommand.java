@@ -26,6 +26,7 @@ public class PartyCommand extends ListenerAdapter {
     Emote ppEmote ;
     Emote tttEmote;
     Emote fgEmote ;
+    Emote drEmote ;
     String ppPicture = "https://i.imgur.com/90DHVeH.png";
     String auPicture = "https://i.imgur.com/Ekzt8Ir.png";
     String tttPicture = "https://i.imgur.com/EFKftWm.png";
@@ -49,10 +50,11 @@ public class PartyCommand extends ListenerAdapter {
             int neededPlayers;
 
             if (args.length>1){
-                auEmote = jda.getEmoteById("755836877067649225");
-                ppEmote = jda.getEmoteById("750445382860931154");
-                tttEmote = jda.getEmoteById("756882270282842143");
-                fgEmote = jda.getEmoteById("756878627785801848");
+                auEmote = jda.getEmoteById("756202017768079511");
+                ppEmote = jda.getEmoteById("756201997375504415");
+                tttEmote = jda.getEmoteById("756903862681468948");
+                fgEmote = jda.getEmoteById("756903877160206466");
+                drEmote = jda.getEmoteById("767416365740982333");
 
                 switch(args[1]){
                     case "au":
@@ -69,7 +71,6 @@ public class PartyCommand extends ListenerAdapter {
                         break;
                     case "dr":
                         neededPlayers = 5;
-                        Emote drEmote = jda.getEmoteById(":heart:");
                         createPartyEmbed(drPicture,"\uD83D\uDC7B - Dead Realm!", channel, neededPlayers, memberFullName, drEmote);
                         break;
                     case "fg":
@@ -98,7 +99,7 @@ public class PartyCommand extends ListenerAdapter {
         partyEmbed.clear();
         partyEmbed.setTitle(title);
         partyEmbed.setDescription(String.format("need at least %s players", neededPlayers));
-        partyEmbed.setColor(0xfc6868);
+        partyEmbed.setColor(0xff6700);
         partyEmbed.setThumbnail(pic);
         partyEmbed.addField("Status:", "add your reaction", false);
         partyEmbed.setFooter(String.format("Requested from %s", memberFullName));
