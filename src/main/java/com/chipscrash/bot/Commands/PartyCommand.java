@@ -142,8 +142,10 @@ public class PartyCommand extends ListenerAdapter {
                 partyEmbed.addField(event.getUser().getName()+"#"+event.getUser().getDiscriminator(),formatter.format(date),false);
                 event.getChannel().retrieveMessageById(event.getMessageId()).queue(message -> {
                     if(message.getReactions().stream().count()>0) {
-                        System.out.println(String.format("Count: %s | Needed: %s", event.getReaction().retrieveUsers().complete().stream().count(), neededPlayers));
+                        System.out.println(String.format("Count: %s | Needed: %s", count, neededPlayers));
                         if(count==neededPlayers){
+                            partyEmbed.getFields().remove(0);
+                            partyEmbed.getFields().add(0,new MessageEmbed.Field("Status:","Enough Players have reacted! Join the Party Voice Channel!",false));
                             event.getChannel().sendMessage(String.format("%s enough Players have reacted! Join the Party Voice Channel!", partyRole.getAsMention())).queue();
                         }
                         message.removeReaction(emote, message.getAuthor()).queue();

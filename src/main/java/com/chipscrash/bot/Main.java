@@ -1,6 +1,7 @@
 package com.chipscrash.bot;
 
 import com.chipscrash.bot.Commands.DeleteCommand;
+import com.chipscrash.bot.Commands.HelpCommand;
 import com.chipscrash.bot.Commands.InfoCommand;
 import com.chipscrash.bot.Commands.PartyCommand;
 import com.chipscrash.bot.Events.ReadyEvent;
@@ -19,12 +20,11 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         jda = JDABuilder.createDefault(System.getenv("DiscordBot")).addEventListeners(new ReadyEvent()).build();
-        jda.getPresence().setStatus(OnlineStatus.IDLE);
+        jda.getPresence().setStatus(OnlineStatus.ONLINE);
         jda.getPresence().setActivity(Activity.listening("Juice Wrld"));
         jda.addEventListener(new InfoCommand());
         jda.addEventListener(new DeleteCommand());
         jda.addEventListener(new PartyCommand());
-
-
+        jda.addEventListener(new HelpCommand());
     }
 }
