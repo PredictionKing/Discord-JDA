@@ -112,6 +112,7 @@ public class PartyCommand extends ListenerAdapter {
     }
 
     public void partyHelpEmbed(MessageChannel channel, String showGames){
+        partyEmbed.clear();
         partyEmbed.setTitle("\uD83C\uDFC6 Party Command");
         partyEmbed.setDescription("Play a game with the @party");
         partyEmbed.setColor(0xfff714);
