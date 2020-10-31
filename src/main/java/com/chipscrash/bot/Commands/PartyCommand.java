@@ -71,6 +71,7 @@ public class PartyCommand extends ListenerAdapter {
                         break;
                     case "dr":
                         neededPlayers = 5;
+                        partyEmotes.put(drEmote, neededPlayers);
                         createPartyEmbed(drPicture,"\uD83D\uDC7B - Dead Realm!", channel, neededPlayers, memberFullName, drEmote);
                         break;
                     case "fg":
