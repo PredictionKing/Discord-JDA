@@ -22,7 +22,7 @@ public class DeleteCommand extends ListenerAdapter {
 
         if(args[0].equalsIgnoreCase(Main.prefix+"delete")){
 
-            if(!event.getMember().getRoles().contains(adminRole)){
+            if(event.getMember().getRoles().contains(adminRole)){
                 if(args.length < 2){
                     //ERROR
                 }else{
