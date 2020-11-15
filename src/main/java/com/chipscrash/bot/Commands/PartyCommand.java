@@ -53,7 +53,7 @@ public class PartyCommand extends ListenerAdapter {
                 auEmote = jda.getEmoteById("756202017768079511");
                 ppEmote = jda.getEmoteById("756201997375504415");
                 tttEmote = jda.getEmoteById("756903862681468948");
-                fgEmote = jda.getEmoteById("756903877160206466");
+                fgEmote = jda.getEmoteById("756878627785801848");
                 drEmote = jda.getEmoteById("767416365740982333");
 
                 switch(args[1]){
@@ -139,9 +139,10 @@ public class PartyCommand extends ListenerAdapter {
         if(event.getReactionEmote().getEmote().equals(emote)){
             if(partyEmbedIds.contains(event.getMessageId())){
                 SimpleDateFormat formatter= new SimpleDateFormat("HH:mm");
+                Calendar cal = new GregorianCalendar(TimeZone.getTimeZone("Europe/Berlin"));
                 Date date = new Date(System.currentTimeMillis());
                 long count = event.getReaction().retrieveUsers().complete().stream().count();
-                partyEmbed.addField(event.getUser().getName()+"#"+event.getUser().getDiscriminator(),formatter.format(date),false);
+                partyEmbed.addField(event.getUser().getName()+"#"+event.getUser().getDiscriminator(),formatter.format(cal.getTime()),false);
                 event.getChannel().retrieveMessageById(event.getMessageId()).queue(message -> {
                     if(message.getReactions().stream().count()>0) {
                         System.out.println(String.format("Count: %s | Needed: %s", count, neededPlayers));
