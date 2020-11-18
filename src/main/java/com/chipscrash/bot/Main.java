@@ -1,9 +1,6 @@
 package com.chipscrash.bot;
 
-import com.chipscrash.bot.Commands.DeleteCommand;
-import com.chipscrash.bot.Commands.HelpCommand;
-import com.chipscrash.bot.Commands.InfoCommand;
-import com.chipscrash.bot.Commands.PartyCommand;
+import com.chipscrash.bot.Commands.*;
 import com.chipscrash.bot.Events.ReadyEvent;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -26,5 +23,6 @@ public class Main {
         jda.addEventListener(new DeleteCommand());
         jda.addEventListener(new PartyCommand());
         jda.addEventListener(new HelpCommand());
+        jda.addEventListener(new NSFWCommand());
     }
 }
