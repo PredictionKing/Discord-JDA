@@ -139,10 +139,10 @@ public class PartyCommand extends ListenerAdapter {
         if(event.getReactionEmote().getEmote().equals(emote)){
             if(partyEmbedIds.contains(event.getMessageId())){
                 SimpleDateFormat formatter= new SimpleDateFormat("HH:mm");
-                Calendar cal = new GregorianCalendar(TimeZone.getTimeZone("Europe/Berlin"));
+                Calendar c = Calendar.getInstance(TimeZone.getTimeZone("Europe/Berlin"));
                 Date date = new Date(System.currentTimeMillis());
                 long count = event.getReaction().retrieveUsers().complete().stream().count();
-                partyEmbed.addField(event.getUser().getName()+"#"+event.getUser().getDiscriminator(),formatter.format(cal.getTime()),false);
+                partyEmbed.addField(event.getUser().getName()+"#"+event.getUser().getDiscriminator(),formatter.format(c.getTime()),false);
                 event.getChannel().retrieveMessageById(event.getMessageId()).queue(message -> {
                     if(message.getReactions().stream().count()>0) {
                         System.out.println(String.format("Count: %s | Needed: %s", count, neededPlayers));
