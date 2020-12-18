@@ -11,6 +11,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.time.ZoneId;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -141,6 +142,7 @@ public class PartyCommand extends ListenerAdapter {
                 SimpleDateFormat formatter= new SimpleDateFormat("HH:mm");
                 Calendar c = Calendar.getInstance(TimeZone.getTimeZone("Europe/Berlin"));
                 Date date = new Date(System.currentTimeMillis());
+                c.add(Calendar.HOUR,1);
                 long count = event.getReaction().retrieveUsers().complete().stream().count();
                 partyEmbed.addField(event.getUser().getName()+"#"+event.getUser().getDiscriminator(),formatter.format(c.getTime()),false);
                 event.getChannel().retrieveMessageById(event.getMessageId()).queue(message -> {
